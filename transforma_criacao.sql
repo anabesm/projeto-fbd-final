@@ -1,7 +1,6 @@
 CREATE DATABASE transforma;
 
 -- Criando a tabela Usuario
--- Criando a tabela Usuario
 CREATE TABLE Usuario (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
@@ -34,7 +33,7 @@ CREATE TABLE Voluntario (
     FOREIGN KEY (id) REFERENCES Usuario (id) ON DELETE CASCADE
 );
 
-CREATE TYPE status_enum AS ENUM ('Pendente', 'Em Andamento', 'Concluído');
+CREATE TYPE status_enum AS ENUM ('Pendente', 'Em Andamento', 'Concluído');
 -- Criando tabela Projeto
 CREATE TABLE Projeto (
     id SERIAL PRIMARY KEY,
