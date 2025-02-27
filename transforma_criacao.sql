@@ -1,6 +1,7 @@
 CREATE DATABASE transforma;
 
 -- Criando a tabela Usuario
+-- Criando a tabela Usuario
 CREATE TABLE Usuario (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
@@ -33,6 +34,19 @@ CREATE TABLE Voluntario (
     FOREIGN KEY (id) REFERENCES Usuario (id) ON DELETE CASCADE
 );
 
+CREATE TYPE status_enum AS ENUM ('Pendente', 'Em Andamento', 'Concluído');
+-- Criando tabela Projeto
+CREATE TABLE Projeto (
+    id SERIAL PRIMARY KEY,
+    id_ong INT,
+    nome VARCHAR(150) NOT NULL,
+    descricao TEXT,
+    meta_voluntarios INT,
+    data_inicio DATE,
+    data_termino DATE,
+    status status_enum,
+    FOREIGN KEY (id_ong) REFERENCES ONG (id) ON DELETE CASCADE
+);
 -- Criando tabela Etapa
 CREATE TABLE Etapa (
     id SERIAL PRIMARY KEY,
@@ -46,22 +60,8 @@ CREATE TABLE Etapa (
     bairro VARCHAR(100),
     cidade VARCHAR(100),
     estado VARCHAR(50),
-    cep INT
+    cep INT,
 	FOREIGN KEY(id_projeto) REFERENCES Projeto (id) ON DELETE CASCADE
-);
-CREATE TYPE status_enum AS ENUM ('Pendente', 'Em Andamento', 'Concluído');
--- Criando tabela Projeto
-CREATE TABLE Projeto (
-    id SERIAL PRIMARY KEY,
-    id_ong INT,
-    nome VARCHAR(150) NOT NULL,
-    descricao TEXT,
-    meta_voluntarios INT,
-    data_inicio DATE,
-    data_termino DATE,
-    status status_enum,
-    FOREIGN KEY (id_ong) REFERENCES ONG (id) ON DELETE CASCADE,
-    FOREIGN KEY (id_etapa) REFERENCES Etapa (id) ON DELETE CASCADE
 );
 
 
@@ -82,6 +82,7 @@ CREATE TABLE Inscricao (
 -- Criando tabela Notificacao
 CREATE TABLE Notificacao (
     id SERIAL PRIMARY KEY,
+	id_usuario INT,
     titulo VARCHAR(30),
     descricao TEXT,
     FOREIGN KEY (id_usuario) REFERENCES Usuario (id) ON DELETE CASCADE
